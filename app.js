@@ -1,5 +1,5 @@
-import { CATALOG, CHANNELS, LOW_STOCK, EVENT_ID, PRICES } from './config.js';
-import { createStore, parsePreorders, UserError, catalogItem, sizesFor, sizeLabel, priceOf, matchPreorder } from './store.js';
+import { CATALOG, CHANNELS, LOW_STOCK, EVENT_ID, PRICES } from './config.js?v=2';
+import { createStore, parsePreorders, UserError, catalogItem, sizesFor, sizeLabel, priceOf, matchPreorder } from './store.js?v=2';
 
 // ---------- helpers ----------
 const $ = (sel, root = document) => root.querySelector(sel);

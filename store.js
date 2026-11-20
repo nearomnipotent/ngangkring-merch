@@ -9,7 +9,7 @@
 //                    adjust: { type:'adjust', at, by, itemId, itemName, note }
 //   preorders/{id}   { no, name, product, size, qty, category, picked, pickedBy, pickedAt, logId }
 
-import { FIREBASE_CONFIG, EVENT_ID, CATALOG, SIZES_BY_TYPE, CHANNELS, PRICES } from './config.js';
+import { FIREBASE_CONFIG, EVENT_ID, CATALOG, SIZES_BY_TYPE, CHANNELS, PRICES } from './config.js?v=2';
 
 const FIREBASE_SDK = 'https://www.gstatic.com/firebasejs/10.12.2/';
 
