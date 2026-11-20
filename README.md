@@ -4,9 +4,11 @@ A live page for the merch table at Ngangkring Kafispolgama 2026. Everyone on the
 
 **What it does**
 
-- **Stok:** the remaining stock per design, colour and size. Tap a number to record a pickup: choose the channel (Pre-order, Bundling + Registrasi, On The Spot), the quantity, and optionally the buyer's name.
-- **Daftar pre-order:** the list from the "Pengambilan Merchandise" tab. Tap "Tandai diambil" when someone collects their order.
-- **Riwayat:** every record from every committee member. "Batalkan" undoes a mistake and puts the stock back.
+- **Uang masuk:** the blue panel at the top adds up every pickup and sale at base price (kaos Rp135.000, totebag Rp100.000), split by channel. Pre-order pickups count too.
+- **Katalog:** a card per design with its photo, price and remaining stock per size. Tap a size to record a pickup: choose the channel (Pre-order, Bundling + Registrasi, On The Spot), the quantity, and optionally the buyer's name. The total shows before you save. **Atur stok** on a card sets the real count (the totebag starts at 0 until someone fills it in).
+- **Pengambilan pre-order:** the list from the "Pengambilan Merchandise" tab. "Tandai diambil" counts the money and takes the matching shirt off the stock. When the product or size does not match the catalogue (for example size "FU"), the money is still counted but no stock is taken, and the history says so.
+- **Riwayat:** every record from every committee member, with its amount. "Batalkan" undoes a mistake and puts the stock and money back.
+- **Practice copy:** add `?demo` to the address to try everything without touching the real data.
 - **Unduh CSV** on each section downloads a recap you can paste into the Google Sheet.
 
 If two people take the last shirt of a size at the same moment, only one record goes through. The other person sees "Stok XL tinggal 0".
@@ -61,10 +63,12 @@ On the page, open **Daftar pre-order** → **Impor daftar**. In the Google Sheet
 ## Panduan singkat untuk panitia
 
 1. Buka link yang dibagikan, isi **nama kamu** saat diminta (sekali saja).
-2. Ada yang ambil atau beli kaos? Di tab **Stok**, ketuk angka ukuran yang dimaksud → pilih jalur → jumlah → **Catat & kurangi stok**.
-3. Pemesan pre-order datang? Tab **Daftar pre-order** → cari namanya → **Tandai diambil**.
-4. Salah input? Tab **Riwayat** → **Batalkan** pada catatan itu. Stok kembali otomatis.
-5. Titik hijau di pojok kanan atas = tersambung. Kalau sinyal hilang, input tetap tersimpan dan terkirim otomatis saat online lagi.
+2. Ada yang ambil atau beli? Di **Katalog**, ketuk ukuran yang dimaksud → pilih jalur → jumlah → **Catat · Rp…**. Uang masuk langsung bertambah.
+3. Pemesan pre-order datang? Tab **Pre-order** → cari namanya → **Tandai diambil**. Uangnya ikut tercatat.
+4. Salah input? Tab **Riwayat** → **Batalkan** pada catatan itu. Stok dan uang kembali otomatis.
+5. Jumlah di meja beda dengan di layar? **Atur stok** di kartu produk.
+6. Mau latihan dulu? Buka link dengan tambahan `?demo` di belakangnya.
+7. Titik hijau di pojok kanan atas = tersambung. Kalau sinyal hilang, input tetap tersimpan dan terkirim otomatis saat online lagi.
 
 Angka oranye = tinggal sedikit (≤ 3). Kotak garis putus-putus = ukuran habis.
 
@@ -74,9 +78,11 @@ Angka oranye = tinggal sedikit (≤ 3). Kotak garis putus-putus = ukuran habis.
 
 | I want to… | Do this |
 | --- | --- |
-| Fix a stock number after the database is live | Firebase console → Firestore → `events/ngangkring-2026/stock/<item>` → edit `sizes` |
+| Fix a stock number | **Atur stok** on the product card (logged in Riwayat) |
+| Change a price | `PRICES` in `config.js` (applies to new records only) |
+| Change a product photo | Replace the file in `img/` (square, white background) |
 | Do a test run, then start clean on the day | Test with `EVENT_ID = 'ngangkring-test'` in `config.js`, then change it back to `'ngangkring-2026'` |
-| Add a design or colour | Add a line to `INITIAL_STOCK`, then add the same document in Firestore (or use a new `EVENT_ID`) |
+| Add a design or colour | Add a line to `CATALOG` in `config.js` with a photo in `img/`. The page adds it to the database the next time it opens |
 | Change the low-stock warning | `LOW_STOCK` in `config.js` |
 
 ## Files
@@ -87,7 +93,8 @@ Angka oranye = tinggal sedikit (≤ 3). Kotak garis putus-putus = ukuran habis.
 | `styles.css` | The look, including the phone layout |
 | `app.js` | What the buttons do |
 | `store.js` | Saving and live sync (Firebase, or demo mode in the browser) |
-| `config.js` | **Your settings:** Firebase keys, event ID, starting stock |
+| `config.js` | **Your settings:** Firebase keys, event ID, prices, catalogue and starting stock |
+| `img/` | Product photos, taken from the sheet and the Instagram posts |
 | `firestore.rules` | Database access rules to paste into Firebase |
 
 No build step, no install. To try it on your computer, run any static server in this folder, for example `npx http-server .`, and open the address it prints.

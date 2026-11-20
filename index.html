@@ -3,23 +3,35 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-  <title>Merch Ngangkring 2026</title>
-  <meta name="description" content="Stok dan pengambilan merchandise Ngangkring Kafispolgama 2026, tercatat langsung untuk semua panitia.">
-  <meta name="theme-color" content="#f4f3ef">
-  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Cpath fill='%2316150f' d='M11 4l-7 4 3 6 3-1.5V28h12V12.5l3 1.5 3-6-7-4c-1 2-3 3-5 3s-4-1-5-3z'/%3E%3C/svg%3E">
+  <title>Meja Merch Ngangkring 2026</title>
+  <meta name="description" content="Katalog, stok, pengambilan dan uang masuk merchandise Ngangkring Kafispolgama 2026, tercatat langsung untuk semua panitia.">
+  <meta name="theme-color" content="#fff6e3">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%231c7fd0'/%3E%3Cpath fill='%23ffd23f' d='M11 7l-6 3.5 2.6 5 2.4-1.2V25h12V14.3l2.4 1.2 2.6-5L21 7c-.9 1.7-2.8 2.6-5 2.6S11.9 8.7 11 7z'/%3E%3C/svg%3E">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,500;12..96,600;12..96,700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@600;700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="styles.css">
 </head>
 <body>
+  <!-- Patchwork band, drawn from the Ngangkring 2026 poster tiles -->
+  <svg class="patch" aria-hidden="true" preserveAspectRatio="xMinYMid slice">
+    <defs>
+      <pattern id="tiles" width="192" height="32" patternUnits="userSpaceOnUse">
+        <rect width="32" height="32" fill="#ffd23f"/><path d="M16 6v20M6 16h20M9 9l14 14M23 9L9 23" stroke="#fff" stroke-width="3" stroke-linecap="round"/>
+        <rect x="32" width="32" height="32" fill="#2e9e5b"/><path d="M48 5c3 6 3 6 0 11-3-5-3-5 0-11zm0 22c-3-6-3-6 0-11 3 5 3 5 0 11zM37 16c6-3 6-3 11 0-5 3-5 3-11 0zm22 0c-6 3-6 3-11 0 5-3 5-3 11 0z" fill="#ffd23f"/>
+        <rect x="64" width="32" height="32" fill="#fff"/><rect x="64" width="16" height="16" fill="#ffd23f"/><rect x="80" y="16" width="16" height="16" fill="#ffd23f"/>
+        <rect x="96" width="32" height="32" fill="#1c7fd0"/><g fill="#fff"><rect x="103" y="7" width="7" height="7" rx="2"/><rect x="114" y="7" width="7" height="7" rx="2"/><rect x="103" y="18" width="7" height="7" rx="2"/><rect x="114" y="18" width="7" height="7" rx="2"/></g>
+        <rect x="128" width="32" height="32" fill="#ef6b7a"/><circle cx="144" cy="16" r="9" fill="#ffd23f"/>
+        <rect x="160" width="32" height="32" fill="#fff6e3"/><path d="M176 4l3.5 8.5L188 16l-8.5 3.5L176 28l-3.5-8.5L164 16l8.5-3.5z" fill="#ef6b7a"/>
+      </pattern>
+    </defs>
+    <rect width="100%" height="100%" fill="url(#tiles)"/>
+  </svg>
+
   <header class="bar">
     <div class="brand">
-      <svg class="mark" viewBox="0 0 32 32" aria-hidden="true"><path d="M11 4l-7 4 3 6 3-1.5V28h12V12.5l3 1.5 3-6-7-4c-1 2-3 3-5 3s-4-1-5-3z"/></svg>
-      <div>
-        <strong>Merch Ngangkring 2026</strong>
-        <span>Kafispolgama · Ing Madya Mangun Kalcer</span>
-      </div>
+      <span class="wordmark">Ngangkring <br class="br-phone">Kafispolgama 2026</span>
+      <span class="tag">Ing Madya Mangun Kalcer</span>
     </div>
     <div class="bar-right">
       <span class="sync" id="sync" data-state="connecting"><i></i><span>Menghubungkan…</span></span>
@@ -30,54 +42,48 @@
   </header>
 
   <div class="demo-note" id="demoNote" hidden>
-    <strong>Mode demo.</strong> Data hanya tersimpan di browser ini, panitia lain belum bisa melihatnya.
-    Isi <code>config.js</code> dengan setelan Firebase supaya tersambung (lihat README).
+    <strong>Mode latihan.</strong> Yang kamu catat di sini hanya tersimpan di browser ini dan tidak masuk ke data panitia. Buka alamat tanpa <code>?demo</code> untuk data asli.
   </div>
 
   <main class="page">
-    <section class="head">
-      <div>
-        <h1>Stok & pengambilan merch</h1>
-        <p class="lede" id="lede">Memuat data…</p>
+    <section class="money" aria-labelledby="pageTitle">
+      <div class="money-main">
+        <h1 id="pageTitle">Meja Merch</h1>
+        <p class="money-label">Uang masuk dari merch</p>
+        <p class="money-total" id="moneyTotal">Rp0</p>
+        <p class="money-sub" id="moneySub">Memuat data…</p>
       </div>
-      <dl class="kpis" id="kpis"></dl>
+      <dl class="money-split" id="moneySplit"></dl>
     </section>
 
     <nav class="tabs" role="tablist" aria-label="Bagian">
-      <button role="tab" type="button" data-tab="stock" aria-selected="true">Stok</button>
-      <button role="tab" type="button" data-tab="preorder" aria-selected="false">Daftar pre-order <span class="count" id="poTabCount"></span></button>
+      <button role="tab" type="button" data-tab="stock" aria-selected="true">Katalog</button>
+      <button role="tab" type="button" data-tab="preorder" aria-selected="false">Pre-order <span class="count" id="poTabCount"></span></button>
       <button role="tab" type="button" data-tab="log" aria-selected="false" class="tab-log">Riwayat <span class="count" id="logTabCount"></span></button>
     </nav>
 
     <div class="layout">
       <div class="main-col">
-        <section class="panel" id="panel-stock" data-panel="stock" aria-labelledby="stockTitle">
-          <header class="panel-head">
+        <section class="block" id="panel-stock" data-panel="stock" aria-labelledby="stockTitle">
+          <header class="block-head">
             <div>
-              <h2 id="stockTitle">Sisa stok per ukuran</h2>
-              <p class="hint">Ketuk angka ukuran untuk mencatat kaos yang diambil atau dibeli.</p>
+              <h2 id="stockTitle">Katalog & sisa stok</h2>
+              <p class="hint">Ketuk ukuran untuk mencatat barang yang diambil atau dibeli. Harga ikut terhitung otomatis.</p>
             </div>
             <button class="btn ghost" type="button" data-export="stock">Unduh CSV</button>
           </header>
-          <div class="grid-head" aria-hidden="true">
-            <span>Desain</span>
-            <span class="sizes-head" id="sizesHead"></span>
-            <span class="num">Sisa</span>
-            <span class="num">Sudah keluar</span>
-          </div>
-          <div id="stockRows" class="stock-rows"></div>
-          <div class="legend">
+          <div class="catalog" id="catalog"></div>
+          <p class="legend">
             <span><i class="sw low"></i>Tinggal sedikit (≤ <span id="lowN"></span>)</span>
             <span><i class="sw zero"></i>Habis</span>
-            <span id="channelLegend"></span>
-          </div>
+          </p>
         </section>
 
-        <section class="panel" id="panel-preorder" data-panel="preorder" hidden aria-labelledby="poTitle">
-          <header class="panel-head">
+        <section class="block" id="panel-preorder" data-panel="preorder" hidden aria-labelledby="poTitle">
+          <header class="block-head">
             <div>
-              <h2 id="poTitle">Daftar pengambilan pre-order</h2>
-              <p class="hint" id="poSummary">Belum ada daftar. Impor dari Google Sheet.</p>
+              <h2 id="poTitle">Pengambilan pre-order</h2>
+              <p class="hint" id="poSummary">Belum ada daftar.</p>
             </div>
             <div class="head-actions">
               <button class="btn ghost" type="button" data-export="preorders">Unduh CSV</button>
@@ -99,29 +105,36 @@
         </section>
       </div>
 
-      <aside class="panel log-panel" id="panel-log" data-panel="log" aria-labelledby="logTitle">
-        <header class="panel-head">
+      <aside class="block log-panel" id="panel-log" data-panel="log" aria-labelledby="logTitle">
+        <header class="block-head">
           <div>
             <h2 id="logTitle">Riwayat langsung</h2>
-            <p class="hint">Setiap catatan dari semua panitia, terbaru di atas.</p>
+            <p class="hint">Semua catatan dari semua panitia, terbaru di atas.</p>
           </div>
           <button class="btn ghost" type="button" data-export="log">Unduh CSV</button>
         </header>
-        <div class="chips" role="group" aria-label="Saring jalur" id="logFilters"></div>
+        <div class="chips log-chips" role="group" aria-label="Saring jalur" id="logFilters"></div>
         <ol class="log" id="logList"></ol>
       </aside>
     </div>
+
+    <footer class="foot">
+      Kaos Rp135.000 · Totebag Rp100.000 (harga dasar) · Ngangkring Kafispolgama 2026, Taman Ismail Marzuki, 20 November 2026
+    </footer>
   </main>
 
-  <!-- Record a pickup -->
+  <!-- Record a pickup / sale -->
   <dialog id="recordDlg" class="dlg" aria-labelledby="recTitle">
     <form method="dialog" id="recordForm" novalidate>
-      <header>
-        <h2 id="recTitle">—</h2>
-        <p id="recLeft" class="hint"></p>
+      <header class="rec-head">
+        <img id="recImg" alt="" width="72" height="72">
+        <div>
+          <h2 id="recTitle">—</h2>
+          <p id="recLeft" class="hint"></p>
+        </div>
       </header>
       <fieldset class="seg" id="recChannels">
-        <legend>Jalur pengambilan</legend>
+        <legend>Jalur</legend>
       </fieldset>
       <div class="field">
         <span class="label" id="qtyLabel">Jumlah</span>
@@ -135,10 +148,27 @@
         <span class="label">Nama pembeli <em>(opsional)</em></span>
         <input id="recBuyer" type="text" autocomplete="off" placeholder="Misal: Budi, HI 2009">
       </label>
+      <p class="rec-total"><span>Total</span><b id="recTotal">Rp0</b></p>
       <p class="form-error" id="recError" role="alert"></p>
       <footer>
         <button class="btn ghost" type="button" data-close>Batal</button>
-        <button class="btn primary" type="submit" id="recSubmit">Catat & kurangi stok</button>
+        <button class="btn primary" type="submit" id="recSubmit">Catat</button>
+      </footer>
+    </form>
+  </dialog>
+
+  <!-- Adjust stock -->
+  <dialog id="stockDlg" class="dlg" aria-labelledby="stockDlgTitle">
+    <form method="dialog" id="stockForm" novalidate>
+      <header>
+        <h2 id="stockDlgTitle">Atur stok</h2>
+        <p class="hint">Isi jumlah yang benar-benar ada di meja sekarang. Perubahan tercatat di riwayat.</p>
+      </header>
+      <div class="stock-inputs" id="stockInputs"></div>
+      <p class="form-error" id="stockError" role="alert"></p>
+      <footer>
+        <button class="btn ghost" type="button" data-close>Batal</button>
+        <button class="btn primary" type="submit">Simpan stok</button>
       </footer>
     </form>
   </dialog>
