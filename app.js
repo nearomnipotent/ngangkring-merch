@@ -1,5 +1,5 @@
-import { CATALOG, CHANNELS, LOW_STOCK, EVENT_ID, PRICES } from './config.js?v=2';
-import { createStore, parsePreorders, UserError, catalogItem, sizesFor, sizeLabel, priceOf, matchPreorder } from './store.js?v=2';
+import { CATALOG, CHANNELS, LOW_STOCK, EVENT_ID, PRICES } from './config.js?v=3';
+import { createStore, parsePreorders, UserError, catalogItem, sizesFor, sizeLabel, priceOf, matchPreorder } from './store.js?v=3';
 
 // ---------- helpers ----------
 const $ = (sel, root = document) => root.querySelector(sel);
@@ -279,7 +279,7 @@ function renderLog() {
         <span class="meta">${timeTag(e.at)} <span class="ch"><i class="dot ${c.id}"></i>${esc(c.label)}</span>
           ${e.buyer ? `<span>· ${esc(e.buyer)}</span>` : ''}
           <span>· oleh ${esc(e.by)}</span>
-          ${e.stockTaken === false && !e.cancelled ? '<span>· stok tidak dipotong</span>' : ''}
+          ${e.stockTaken === false && !e.cancelled ? `<span>· ${e.reserved ? 'dari jatah PO' : 'stok tidak dipotong'}</span>` : ''}
           ${e.cancelled ? `<span>· dibatalkan ${esc(e.cancelledBy)}</span>` : ''}</span>
         ${e.cancelled ? '' : `<button type="button" class="undo" data-cancel="${esc(e.id)}">Batalkan</button>`}
       </li>`;
@@ -346,7 +346,9 @@ $('#poList').addEventListener('click', (e) => {
     try {
       if (pick) {
         const r = await store.pickPreorder(pick.dataset.pick, me);
-        toast(r?.stockTaken ? 'Diambil. Stok dipotong, uang tercatat.' : 'Diambil. Uang tercatat; stok tidak dipotong (ukuran/produk tidak cocok atau habis).');
+        toast(r?.stockTaken ? 'Diambil. Stok dipotong, uang tercatat.'
+          : r?.reserved ? 'Diambil. Uang tercatat (barang PO sudah disisihkan dari stok).'
+          : 'Diambil. Uang tercatat; stok tidak dipotong (ukuran/produk tidak cocok atau habis).');
       } else {
         if (!confirm('Batalkan pengambilan ini? Uang dan stok dikembalikan.')) return;
         await store.cancel(unpick.dataset.unpick, me);
@@ -417,7 +419,7 @@ $$('[data-export]').forEach((b) => b.addEventListener('click', () => {
         ? [fmtDay(e.at), fmtTime(e.at), e.by, 'Atur stok', e.itemName, '', '', '', '', '', '', e.note]
         : [fmtDay(e.at), fmtTime(e.at), e.by, 'Penjualan', e.itemName, e.size === 'one' ? '' : sizeLabel(e.size), e.qty,
           e.price ?? priceOf(e.itemId), amountOf(e), channel(e.channel).label, e.buyer,
-          e.cancelled ? `Dibatalkan oleh ${e.cancelledBy}` : e.stockTaken === false ? 'OK (stok tidak dipotong)' : 'OK'])
+          e.cancelled ? `Dibatalkan oleh ${e.cancelledBy}` : e.stockTaken === false ? (e.reserved ? 'OK (jatah PO)' : 'OK (stok tidak dipotong)') : 'OK'])
     ]);
   } else {
     download('pre-order', [

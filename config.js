@@ -33,11 +33,12 @@ export const CATALOG = [
     sizes: { s: 3, m: 9, l: 16, xl: 27, xxl: 7, xxxl: 2 } },
   { id: 'sansiro_putih', type: 'kaos', design: 'Easy Life', warna: 'Putih', img: 'img/sansiro_putih.webp',
     sizes: { s: 1, m: 2, l: 4, xl: 7, xxl: 2, xxxl: 0 } },
-  { id: 'fisipol_hitam', type: 'kaos', design: 'FISIPOL Demo', warna: 'Hitam', img: 'img/fisipol_hitam.webp',
+  { id: 'fisipol_hitam', type: 'kaos', design: 'FISIPOL Demo', warna: 'Hitam', img: 'img/fisipol_hitam.webp?v=3',
     sizes: { s: 2, m: 8, l: 13, xl: 21, xxl: 5, xxxl: 1 } },
-  // Totebag stock is not in the sheet yet: set it on the page with "Atur stok".
+  // poReserved: the stock count already leaves out the pre-ordered totebags
+  // (50 made, 45 for sale), so a pre-order pickup counts money but takes no stock.
   { id: 'totebag', type: 'totebag', design: 'Totebag FISIPOL Demo', warna: 'Natural', img: 'img/totebag.webp',
-    sizes: { one: 0 } }
+    sizes: { one: 45 }, poReserved: true }
 ];
 
 export const SIZES_BY_TYPE = {

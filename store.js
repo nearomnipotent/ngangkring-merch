@@ -9,7 +9,7 @@
 //                    adjust: { type:'adjust', at, by, itemId, itemName, note }
 //   preorders/{id}   { no, name, product, size, qty, category, picked, pickedBy, pickedAt, logId }
 
-import { FIREBASE_CONFIG, EVENT_ID, CATALOG, SIZES_BY_TYPE, CHANNELS, PRICES } from './config.js?v=2';
+import { FIREBASE_CONFIG, EVENT_ID, CATALOG, SIZES_BY_TYPE, CHANNELS, PRICES } from './config.js?v=3';
 
 const FIREBASE_SDK = 'https://www.gstatic.com/firebasejs/10.12.2/';
 
@@ -94,7 +94,8 @@ const ops = {
     const item = m.itemId ? await t.get(['stock', m.itemId]) : null;
     const qty = Number(po.qty) || 1;
     const left = item?.sizes?.[m.size] ?? 0;
-    const stockTaken = !!item && left >= qty;
+    const reserved = !!catalogItem(m.itemId)?.poReserved; // set aside already, not in the stock count
+    const stockTaken = !reserved && !!item && left >= qty;
     const price = PRICES[m.type] ?? PRICES.kaos;
     if (stockTaken) {
       t.update(['stock', m.itemId], {
@@ -106,10 +107,10 @@ const ops = {
     t.set(['log', logId], {
       type: 'sale', at: Date.now(), by, itemId: m.itemId ?? '', itemName: po.product,
       size: m.size ?? po.size, qty, channel: 'po', buyer: po.name || `Pre-order no. ${po.no}`,
-      price, amount: price * qty, stockTaken, poId, cancelled: false
+      price, amount: price * qty, stockTaken, reserved, poId, cancelled: false
     });
     t.update(['preorders', poId], { picked: true, pickedBy: by, pickedAt: Date.now(), logId });
-    return { stockTaken, matched: !!m.itemId };
+    return { stockTaken, reserved, matched: !!m.itemId };
   },
 
   async setStock(t, itemId, sizes, by) {
