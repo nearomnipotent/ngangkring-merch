@@ -6,12 +6,12 @@
 //    While this is empty the page runs in DEMO MODE: data is saved only
 //    in this browser, so other people will NOT see your changes.
 export const FIREBASE_CONFIG = {
-  // apiKey: "...",
-  // authDomain: "...",
-  // projectId: "...",
-  // storageBucket: "...",
-  // messagingSenderId: "...",
-  // appId: "..."
+  apiKey: "AIzaSyCwUpcvclXf2ed7aHBBle7NkBUjuAE5A1E",
+  authDomain: "ngangkring-kafispolgama.firebaseapp.com",
+  projectId: "ngangkring-kafispolgama",
+  storageBucket: "ngangkring-kafispolgama.firebasestorage.app",
+  messagingSenderId: "761855573957",
+  appId: "1:761855573957:web:461c639e6ace36c85155ac"
 };
 
 // 2. Name of this event's data. Change it to start a fresh, empty record
