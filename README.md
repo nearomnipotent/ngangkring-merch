@@ -15,6 +15,8 @@ If two people take the last shirt of a size at the same moment, only one record 
 
 ## Setup (about 10 minutes, once)
 
+> **Already done for this event (20 Nov 2026).** The page is connected to the Firebase project `ngangkring-kafispolgama` (Spark free plan, database in Jakarta), anonymous sign-in is on, the rules are published, and the 18 pre-order names are imported. Open the console at <https://console.firebase.google.com/project/ngangkring-kafispolgama> with the Google account that owns it. The steps below are only needed to set this up again somewhere else.
+
 The page is hosted free on GitHub Pages. GitHub can only host the page, though, so the shared live data goes in a free Firebase database. Until you finish steps 1–4 the page runs in **demo mode**: it works, but the data stays in your own browser only.
 
 ### 1. Create a Firebase project
