@@ -1,0 +1,186 @@
+<!doctype html>
+<html lang="id">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>Merch Ngangkring 2026</title>
+  <meta name="description" content="Stok dan pengambilan merchandise Ngangkring Kafispolgama 2026, tercatat langsung untuk semua panitia.">
+  <meta name="theme-color" content="#f4f3ef">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Cpath fill='%2316150f' d='M11 4l-7 4 3 6 3-1.5V28h12V12.5l3 1.5 3-6-7-4c-1 2-3 3-5 3s-4-1-5-3z'/%3E%3C/svg%3E">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,500;12..96,600;12..96,700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <header class="bar">
+    <div class="brand">
+      <svg class="mark" viewBox="0 0 32 32" aria-hidden="true"><path d="M11 4l-7 4 3 6 3-1.5V28h12V12.5l3 1.5 3-6-7-4c-1 2-3 3-5 3s-4-1-5-3z"/></svg>
+      <div>
+        <strong>Merch Ngangkring 2026</strong>
+        <span>Kafispolgama · Ing Madya Mangun Kalcer</span>
+      </div>
+    </div>
+    <div class="bar-right">
+      <span class="sync" id="sync" data-state="connecting"><i></i><span>Menghubungkan…</span></span>
+      <button class="who" id="whoBtn" type="button" aria-label="Ganti nama panitia">
+        <span class="avatar" id="whoAvatar">?</span><span id="whoName">Isi nama</span>
+      </button>
+    </div>
+  </header>
+
+  <div class="demo-note" id="demoNote" hidden>
+    <strong>Mode demo.</strong> Data hanya tersimpan di browser ini, panitia lain belum bisa melihatnya.
+    Isi <code>config.js</code> dengan setelan Firebase supaya tersambung (lihat README).
+  </div>
+
+  <main class="page">
+    <section class="head">
+      <div>
+        <h1>Stok & pengambilan merch</h1>
+        <p class="lede" id="lede">Memuat data…</p>
+      </div>
+      <dl class="kpis" id="kpis"></dl>
+    </section>
+
+    <nav class="tabs" role="tablist" aria-label="Bagian">
+      <button role="tab" type="button" data-tab="stock" aria-selected="true">Stok</button>
+      <button role="tab" type="button" data-tab="preorder" aria-selected="false">Daftar pre-order <span class="count" id="poTabCount"></span></button>
+      <button role="tab" type="button" data-tab="log" aria-selected="false" class="tab-log">Riwayat <span class="count" id="logTabCount"></span></button>
+    </nav>
+
+    <div class="layout">
+      <div class="main-col">
+        <section class="panel" id="panel-stock" data-panel="stock" aria-labelledby="stockTitle">
+          <header class="panel-head">
+            <div>
+              <h2 id="stockTitle">Sisa stok per ukuran</h2>
+              <p class="hint">Ketuk angka ukuran untuk mencatat kaos yang diambil atau dibeli.</p>
+            </div>
+            <button class="btn ghost" type="button" data-export="stock">Unduh CSV</button>
+          </header>
+          <div class="grid-head" aria-hidden="true">
+            <span>Desain</span>
+            <span class="sizes-head" id="sizesHead"></span>
+            <span class="num">Sisa</span>
+            <span class="num">Sudah keluar</span>
+          </div>
+          <div id="stockRows" class="stock-rows"></div>
+          <div class="legend">
+            <span><i class="sw low"></i>Tinggal sedikit (≤ <span id="lowN"></span>)</span>
+            <span><i class="sw zero"></i>Habis</span>
+            <span id="channelLegend"></span>
+          </div>
+        </section>
+
+        <section class="panel" id="panel-preorder" data-panel="preorder" hidden aria-labelledby="poTitle">
+          <header class="panel-head">
+            <div>
+              <h2 id="poTitle">Daftar pengambilan pre-order</h2>
+              <p class="hint" id="poSummary">Belum ada daftar. Impor dari Google Sheet.</p>
+            </div>
+            <div class="head-actions">
+              <button class="btn ghost" type="button" data-export="preorders">Unduh CSV</button>
+              <button class="btn" type="button" id="importBtn">Impor daftar</button>
+            </div>
+          </header>
+          <div class="po-tools">
+            <label class="search">
+              <span class="sr">Cari nama atau produk</span>
+              <input type="search" id="poSearch" placeholder="Cari nama atau produk" autocomplete="off">
+            </label>
+            <div class="chips" role="group" aria-label="Saring status">
+              <button type="button" class="chip" data-po-filter="open" aria-pressed="true">Belum diambil</button>
+              <button type="button" class="chip" data-po-filter="done" aria-pressed="false">Sudah</button>
+              <button type="button" class="chip" data-po-filter="all" aria-pressed="false">Semua</button>
+            </div>
+          </div>
+          <ul class="po-list" id="poList"></ul>
+        </section>
+      </div>
+
+      <aside class="panel log-panel" id="panel-log" data-panel="log" aria-labelledby="logTitle">
+        <header class="panel-head">
+          <div>
+            <h2 id="logTitle">Riwayat langsung</h2>
+            <p class="hint">Setiap catatan dari semua panitia, terbaru di atas.</p>
+          </div>
+          <button class="btn ghost" type="button" data-export="log">Unduh CSV</button>
+        </header>
+        <div class="chips" role="group" aria-label="Saring jalur" id="logFilters"></div>
+        <ol class="log" id="logList"></ol>
+      </aside>
+    </div>
+  </main>
+
+  <!-- Record a pickup -->
+  <dialog id="recordDlg" class="dlg" aria-labelledby="recTitle">
+    <form method="dialog" id="recordForm" novalidate>
+      <header>
+        <h2 id="recTitle">—</h2>
+        <p id="recLeft" class="hint"></p>
+      </header>
+      <fieldset class="seg" id="recChannels">
+        <legend>Jalur pengambilan</legend>
+      </fieldset>
+      <div class="field">
+        <span class="label" id="qtyLabel">Jumlah</span>
+        <div class="stepper" role="group" aria-labelledby="qtyLabel">
+          <button type="button" data-step="-1" aria-label="Kurangi">−</button>
+          <input id="recQty" type="number" inputmode="numeric" min="1" value="1" aria-labelledby="qtyLabel">
+          <button type="button" data-step="1" aria-label="Tambah">+</button>
+        </div>
+      </div>
+      <label class="field">
+        <span class="label">Nama pembeli <em>(opsional)</em></span>
+        <input id="recBuyer" type="text" autocomplete="off" placeholder="Misal: Budi, HI 2009">
+      </label>
+      <p class="form-error" id="recError" role="alert"></p>
+      <footer>
+        <button class="btn ghost" type="button" data-close>Batal</button>
+        <button class="btn primary" type="submit" id="recSubmit">Catat & kurangi stok</button>
+      </footer>
+    </form>
+  </dialog>
+
+  <!-- Who am I -->
+  <dialog id="nameDlg" class="dlg" aria-labelledby="nameTitle">
+    <form method="dialog" id="nameForm">
+      <header>
+        <h2 id="nameTitle">Siapa yang jaga meja?</h2>
+        <p class="hint">Namamu tercatat di setiap pengambilan yang kamu input, supaya rekap jelas.</p>
+      </header>
+      <label class="field">
+        <span class="label">Nama panitia</span>
+        <input id="nameInput" type="text" required maxlength="30" autocomplete="name" placeholder="Misal: Kezia">
+      </label>
+      <footer>
+        <button class="btn primary" type="submit">Simpan</button>
+      </footer>
+    </form>
+  </dialog>
+
+  <!-- Import pre-orders -->
+  <dialog id="importDlg" class="dlg wide" aria-labelledby="impTitle">
+    <form method="dialog" id="importForm">
+      <header>
+        <h2 id="impTitle">Impor daftar pre-order</h2>
+        <p class="hint">Di Google Sheet, buka tab <b>Pengambilan Merchandise</b>, blok semua baris (termasuk nomor), salin, lalu tempel di bawah. Mengimpor lagi tidak menghapus centang yang sudah ada.</p>
+      </header>
+      <label class="field">
+        <span class="label">Tempel di sini</span>
+        <textarea id="importText" rows="8" placeholder="1&#9;Dian Budiargo&#9;Kaos Senang Lawan (Hitam)&#9;M&#9;1&#9;Donasi V"></textarea>
+      </label>
+      <p class="hint" id="importPreview"></p>
+      <footer>
+        <button class="btn ghost" type="button" data-close>Batal</button>
+        <button class="btn primary" type="submit" id="importSubmit" disabled>Impor</button>
+      </footer>
+    </form>
+  </dialog>
+
+  <div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+  <script type="module" src="app.js"></script>
+</body>
+</html>
